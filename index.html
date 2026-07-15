@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Belajar Penjumlahan yang Seru!</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Comic Sans MS', 'Trebuchet MS', sans-serif;
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+  }
+  .container { max-width: 800px; margin: 0 auto; }
+  header {
+    text-align: center;
+    background: #fff;
+    border-radius: 24px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  }
+  header h1 { color: #ff6b6b; font-size: 2em; margin-bottom: 8px; }
+  header p { color: #666; }
+  .nav {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .nav button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 16px;
+    background: #fff;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    transition: transform 0.2s;
+    color: #555;
+  }
+  .nav button:hover { transform: translateY(-3px); }
+  .nav button.active { background: #ff6b6b; color: white; }
+  .card {
+    background: #fff;
+    border-radius: 24px;
+    padding: 30px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    display: none;
+  }
+  .card.active { display: block; }
+
+  /* Konsep Section */
+  .concept-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+    font-size: 2.5em;
+  }
+  .group {
+    background: #f0f9ff;
+    border: 3px dashed #74c0fc;
+    border-radius: 16px;
+    padding: 15px 20px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    max-width: 220px;
+    justify-content: center;
+  }
+  .op-symbol { font-size: 1em; font-weight: bold; color: #ff6b6b; }
+  .result-box {
+    background: #fff3bf;
+    border: 3px solid #ffd43b;
+    border-radius: 16px;
+    padding: 15px 25px;
+    font-weight: bold;
+    color: #e8590c;
+  }
+  .controls {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 25px 0;
+    flex-wrap: wrap;
+  }
+  .control-group { text-align: center; }
+  .control-group label { display: block; margin-bottom: 8px; font-weight: bold; }
+  .control-group button {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: #ff6b6b;
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+    margin: 0 5px;
+  }
+  .control-group span { font-size: 1.3em; font-weight: bold; margin: 0 10px; }
+  .explanation {
+    text-align: center;
+    font-size: 1.1em;
+    color: #495057;
+    background: #e7f5ff;
+    padding: 12px;
+    border-radius: 12px;
+    margin-top: 15px;
+  }
+
+  /* Kuis Section */
+  .quiz-question {
+    text-align: center;
+    font-size: 1.4em;
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
+  .quiz-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    font-size: 2em;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .quiz-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .quiz-options button {
+    padding: 16px;
+    font-size: 1.3em;
+    border-radius: 14px;
+    border: 3px solid #dee2e6;
+    background: #f8f9fa;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s;
+  }
+  .quiz-options button:hover { border-color: #74c0fc; }
+  .quiz-options button.correct { background: #b2f2bb; border-color: #40c057; }
+  .quiz-options button.wrong { background: #ffc9c9; border-color: #fa5252; }
+  .quiz-feedback {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 1.2em;
+    font-weight: bold;
+    min-height: 30px;
+  }
+  .quiz-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+  .score-badge {
+    background: #fff3bf;
+    padding: 8px 16px;
+    border-radius: 12px;
+    font-weight: bold;
+    color: #e8590c;
+  }
+  .next-btn {
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: none;
+    background: #40c057;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    display: none;
+  }
+
+  /* Latihan garis bilangan */
+  .numline-wrap { text-align: center; margin: 20px 0; }
+  .numline {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+  }
+  .numline div {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: #f1f3f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border: 2px solid #dee2e6;
+  }
+  .numline div.hop { background: #ffd43b; }
+  .numline div.start { background: #74c0fc; color: white; }
+  .numline div.end { background: #ff6b6b; color: white; }
+
+  footer { text-align: center; margin-top: 20px; color: #888; font-size: 0.9em; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>➕ Ayo Belajar Penjumlahan! ➕</h1>
+    <p>Media pembelajaran interaktif untuk siswa Sekolah Dasar</p>
+  </header>
+
+  <div class="nav">
+    <button class="nav-btn active" data-tab="konsep">🍎 Konsep Dasar</button>
+    <button class="nav-btn" data-tab="garis">📏 Garis Bilangan</button>
+    <button class="nav-btn" data-tab="kuis">📝 Kuis Seru</button>
+  </div>
+
+  <!-- KONSEP -->
+  <div class="card active" id="konsep">
+    <h2 style="text-align:center; color:#ff6b6b;">Menghitung dengan Gambar Buah 🍊</h2>
+    <p style="text-align:center; margin-top:8px; color:#666;">Geser angka di bawah untuk melihat cara penjumlahan!</p>
+
+    <div class="concept-row" id="conceptRow"></div>
+
+    <div class="controls">
+      <div class="control-group">
+        <label>Angka Pertama</label>
+        <button onclick="changeNum(1,-1)">−</button>
+        <span id="num1">2</span>
+        <button onclick="changeNum(1,1)">+</button>
+      </div>
+      <div class="control-group">
+        <label>Angka Kedua</label>
+        <button onclick="changeNum(2,-1)">−</button>
+        <span id="num2">3</span>
+        <button onclick="changeNum(2,1)">+</button>
+      </div>
+    </div>
+
+    <div class="explanation" id="explanation"></div>
+  </div>
+
+  <!-- GARIS BILANGAN -->
+  <div class="card" id="garis">
+    <h2 style="text-align:center; color:#ff6b6b;">Melompat di Garis Bilangan 🐸</h2>
+    <p style="text-align:center; margin-top:8px; color:#666;">Lihat bagaimana katak melompat untuk menjumlahkan angka!</p>
+
+    <div class="numline-wrap">
+      <div class="controls" style="margin-top:20px;">
+        <div class="control-group">
+          <label>Mulai dari</label>
+          <button onclick="changeLine('start',-1)">−</button>
+          <span id="lineStart">3</span>
+          <button onclick="changeLine('start',1)">+</button>
+        </div>
+        <div class="control-group">
+          <label>Lompat sejauh</label>
+          <button onclick="changeLine('hop',-1)">−</button>
+          <span id="lineHop">4</span>
+          <button onclick="changeLine('hop',1)">+</button>
+        </div>
+      </div>
+      <div class="numline" id="numline"></div>
+      <div class="explanation" id="lineExplanation"></div>
+    </div>
+  </div>
+
+  <!-- KUIS -->
+  <div class="card" id="kuis">
+    <h2 style="text-align:center; color:#ff6b6b;">Uji Kemampuanmu! 🌟</h2>
+    <div class="quiz-question" id="quizQuestion"></div>
+    <div class="quiz-visual" id="quizVisual"></div>
+    <div class="quiz-options" id="quizOptions"></div>
+    <div class="quiz-feedback" id="quizFeedback"></div>
+    <div class="quiz-footer">
+      <div class="score-badge" id="scoreBadge">Skor: 0 / 0</div>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Soal Berikutnya ➡️</button>
+    </div>
+  </div>
+
+  <footer>Dibuat untuk membantu anak-anak memahami penjumlahan dengan cara yang menyenangkan 😊</footer>
+</div>
+
+<script>
+const emojis = ['🍎','🍊','🍌','🍇','🍓','⚽','🚗','🎈','⭐','🐱'];
+let currentEmoji = emojis[0];
+
+// ===== TAB NAVIGATION =====
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ===== KONSEP DASAR =====
+let n1 = 2, n2 = 3;
+function renderConcept() {
+  currentEmoji = emojis[Math.floor(Math.random()*emojis.length)];
+  const row = document.getElementById('conceptRow');
+  row.innerHTML = `
+    <div class="group">${currentEmoji.repeat(n1)}</div>
+    <div class="op-symbol">+</div>
+    <div class="group">${currentEmoji.repeat(n2)}</div>
+    <div class="op-symbol">=</div>
+    <div class="result-box">${n1 + n2}</div>
+  `;
+  document.getElementById('num1').textContent = n1;
+  document.getElementById('num2').textContent = n2;
+  document.getElementById('explanation').textContent =
+    `Ada ${n1} ${getName(currentEmoji)} ditambah ${n2} ${getName(currentEmoji)}, semuanya menjadi ${n1+n2} ${getName(currentEmoji)}. Jadi, ${n1} + ${n2} = ${n1+n2}.`;
+}
+function getName(e){
+  const map = {'🍎':'apel','🍊':'jeruk','🍌':'pisang','🍇':'anggur','🍓':'stroberi','⚽':'bola','🚗':'mobil','🎈':'balon','⭐':'bintang','🐱':'kucing'};
+  return map[e] || 'benda';
+}
+function changeNum(which, delta){
+  if(which===1){ n1 = Math.min(8, Math.max(1, n1+delta)); }
+  else { n2 = Math.min(8, Math.max(1, n2+delta)); }
+  renderConcept();
+}
+renderConcept();
+
+// ===== GARIS BILANGAN =====
+let lineStart = 3, lineHop = 4;
+function renderLine(){
+  const wrap = document.getElementById('numline');
+  const end = lineStart + lineHop;
+  const max = Math.max(10, end);
+  wrap.innerHTML = '';
+  for(let i=0;i<=max;i++){
+    const div = document.createElement('div');
+    div.textContent = i;
+    if(i===lineStart) div.classList.add('start');
+    else if(i===end) div.classList.add('end');
+    else if(i>lineStart && i<end) div.classList.add('hop');
+    wrap.appendChild(div);
+  }
+  document.getElementById('lineStart').textContent = lineStart;
+  document.getElementById('lineHop').textContent = lineHop;
+  document.getElementById('lineExplanation').textContent =
+    `Mulai dari angka ${lineStart}, lalu melompat sebanyak ${lineHop} langkah ke kanan, sampai di angka ${end}. Jadi, ${lineStart} + ${lineHop} = ${end}.`;
+}
+function changeLine(which, delta){
+  if(which==='start') lineStart = Math.min(10, Math.max(0, lineStart+delta));
+  else lineHop = Math.min(8, Math.max(1, lineHop+delta));
+  renderLine();
+}
+renderLine();
+
+// ===== KUIS =====
+let score = 0, total = 0, currentAnswer = 0, answered = false;
+function generateQuestion(){
+  answered = false;
+  document.getElementById('nextBtn').style.display = 'none';
+  document.getElementById('quizFeedback').textContent = '';
+  const a = Math.floor(Math.random()*8)+1;
+  const b = Math.floor(Math.random()*8)+1;
+  currentAnswer = a+b;
+  const em = emojis[Math.floor(Math.random()*emojis.length)];
+
+  document.getElementById('quizQuestion').textContent = `Berapa hasil dari ${a} + ${b}?`;
+  document.getElementById('quizVisual').innerHTML =
+    `<span>${em.repeat(a)}</span><span style="font-size:0.6em; color:#ff6b6b;">+</span><span>${em.repeat(b)}</span>`;
+
+  let options = new Set([currentAnswer]);
+  while(options.size < 4){
+    let fake = currentAnswer + (Math.floor(Math.random()*5)-2);
+    if(fake >= 0 && fake !== currentAnswer) options.add(fake);
+  }
+  options = Array.from(options).sort(()=>Math.random()-0.5);
+
+  const optDiv = document.getElementById('quizOptions');
+  optDiv.innerHTML = '';
+  options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.textContent = opt;
+    btn.onclick = () => checkAnswer(opt, btn);
+    optDiv.appendChild(btn);
+  });
+}
+function checkAnswer(opt, btn){
+  if(answered) return;
+  answered = true;
+  total++;
+  const buttons = document.querySelectorAll('.quiz-options button');
+  buttons.forEach(b => {
+    if(parseInt(b.textContent) === currentAnswer) b.classList.add('correct');
+  });
+  if(opt === currentAnswer){
+    score++;
+    document.getElementById('quizFeedback').textContent = '🎉 Benar sekali! Hebat!';
+    document.getElementById('quizFeedback').style.color = '#40c057';
+  } else {
+    btn.classList.add('wrong');
+    document.getElementById('quizFeedback').textContent = `❌ Belum tepat. Jawaban yang benar adalah ${currentAnswer}.`;
+    document.getElementById('quizFeedback').style.color = '#fa5252';
+  }
+  document.getElementById('scoreBadge').textContent = `Skor: ${score} / ${total}`;
+  document.getElementById('nextBtn').style.display = 'inline-block';
+}
+function nextQuestion(){ generateQuestion(); }
+generateQuestion();
+</script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Comic Sans MS', 'Trebuchet MS', sans-serif;
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  min-height: 100vh;
+  padding: 20px;
+  color: #333;
+}
+.container { max-width: 800px; margin: 0 auto; }
+header {
+  text-align: center;
+  background: #fff;
+  border-radius: 24px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+header h1 { color: #ff6b6b; font-size: 2em; margin-bottom: 8px; }
+header p { color: #666; }
+.nav {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.nav button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 16px;
+  background: #fff;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: transform 0.2s;
+  color: #555;
+}
+.nav button:hover { transform: translateY(-3px); }
+.nav button.active { background: #ff6b6b; color: white; }
+.card {
+  background: #fff;
+  border-radius: 24px;
+  padding: 30px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  display: none;
+}
+.card.active { display: block; }
+
+/* Konsep Section */
+.concept-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+  font-size: 2.5em;
+}
+.group {
+  background: #f0f9ff;
+  border: 3px dashed #74c0fc;
+  border-radius: 16px;
+  padding: 15px 20px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  max-width: 220px;
+  justify-content: center;
+}
+.op-symbol { font-size: 1em; font-weight: bold; color: #ff6b6b; }
+.result-box {
+  background: #fff3bf;
+  border: 3px solid #ffd43b;
+  border-radius: 16px;
+  padding: 15px 25px;
+  font-weight: bold;
+  color: #e8590c;
+}
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 25px 0;
+  flex-wrap: wrap;
+}
+.control-group { text-align: center; }
+.control-group label { display: block; margin-bottom: 8px; font-weight: bold; }
+.control-group button {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: #ff6b6b;
+  color: white;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin: 0 5px;
+}
+.control-group span { font-size: 1.3em; font-weight: bold; margin: 0 10px; }
+.explanation {
+  text-align: center;
+  font-size: 1.1em;
+  color: #495057;
+  background: #e7f5ff;
+  padding: 12px;
+  border-radius: 12px;
+  margin-top: 15px;
+}
+
+/* Kuis Section */
+.quiz-question {
+  text-align: center;
+  font-size: 1.4em;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+.quiz-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  font-size: 2em;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.quiz-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+.quiz-options button {
+  padding: 16px;
+  font-size: 1.3em;
+  border-radius: 14px;
+  border: 3px solid #dee2e6;
+  background: #f8f9fa;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+.quiz-options button:hover { border-color: #74c0fc; }
+.quiz-options button.correct { background: #b2f2bb; border-color: #40c057; }
+.quiz-options button.wrong { background: #ffc9c9; border-color: #fa5252; }
+.quiz-feedback {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 1.2em;
+  font-weight: bold;
+  min-height: 30px;
+}
+.quiz-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+.score-badge {
+  background: #fff3bf;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-weight: bold;
+  color: #e8590c;
+}
+.next-btn {
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: none;
+  background: #40c057;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  display: none;
+}
+
+/* Latihan garis bilangan */
+.numline-wrap { text-align: center; margin: 20px 0; }
+.numline {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+.numline div {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: #f1f3f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  border: 2px solid #dee2e6;
+}
+.numline div.hop { background: #ffd43b; }
+.numline div.start { background: #74c0fc; color: white; }
+.numline div.end { background: #ff6b6b; color: white; }
+
+footer { text-align: center; margin-top: 20px; color: #888; font-size: 0.9em; }
